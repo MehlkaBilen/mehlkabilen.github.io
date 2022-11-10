@@ -1,0 +1,86 @@
+
+package FatihHocaOdev;
+
+   
+    
+       public class Odev {
+       public static void main(String[] args) {
+	
+		undoredoo ur = new undoredoo();
+                
+                
+
+       }
+       }
+       
+       
+       
+       package FatihHocaOdev;
+
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoManager;
+
+/**
+ *
+ * @author MONSTER
+ */
+    
+    
+     public class undoredoo extends JFrame {
+   
+	public undoredoo() {
+        JPanel urt = new JPanel();
+        JTextArea area = new JTextArea(10, 30);
+        UndoManager manager = new UndoManager();
+        JButton undo = new JButton("Undo");
+        JButton redo = new JButton("Redo");
+        JButton italic = new JButton("italic");
+        JButton bold = new JButton("bold");
+		
+		undo.addActionListener((ActionEvent e) -> {
+                    try {
+                        manager.undo();
+                    } catch (CannotUndoException ex) {
+                    }
+        });
+		redo.addActionListener((ActionEvent e) -> {
+                    try {
+                        manager.redo();
+                    } catch (CannotRedoException ex) {
+                    }
+        });
+		italic.addActionListener((ActionEvent e) -> {
+                    Font f = area.getFont();
+                    
+                    area.setFont(f.deriveFont(f.getStyle() | Font.ITALIC));
+        });
+		bold.addActionListener((ActionEvent e) -> {
+                    Font f = area.getFont();
+                    
+                    area.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+        });
+		
+		area.getDocument().addUndoableEditListener((UndoableEditEvent e) -> {
+                    manager.addEdit(e.getEdit());
+        });
+		urt.add(area);
+		urt.add(undo);
+		urt.add(redo);
+		urt.add(italic);
+		urt.add(bold);
+		add(urt);
+		setVisible(true);
+		pack();
+	}
+    
+}
